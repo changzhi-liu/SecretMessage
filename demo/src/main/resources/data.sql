@@ -46,12 +46,8 @@ INSERT INTO friends VALUES (1, 3, 349, 349);
 
 
 
-INSERT INTO  message 
-    VALUES
-    (0, 'a', 'b', 'HI', XXXX-XX-XX xx:xx:xx),
-    (1, 'a', 'b', 'HOW ARE YOU', XXXX-XX-XX xx:xx:xx),
-    (2, 'a', 'b', 'WANNA HANG OUT', XXXX-XX-XX xx:xx:xx),
-    (50, 'b', 'a', 'I AM GREAT', XXXX-XX-XX xx:xx:xx),
-    (51, 'b', 'a', 'HOW ABOUT YOU', XXXX-XX-XX xx:xx:xx);
+
+
+
 
 

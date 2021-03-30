@@ -1,9 +1,13 @@
 package com.SecureMessage.demo.controller;
 
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 import java.util. LinkedList;
 import java.util.List;
 import java.util.Random;
 // note the generated list index 0 means get 1s row
+@Component
 public class GenerateQueryList {
 
     final int postAdd = 20;
@@ -24,9 +28,27 @@ public class GenerateQueryList {
         res.add(b);
         res.add(c);res.add(d);
 
+
         return res;
     }
+    public List<List<Integer>> convertToRow(List<List<Integer>> t){
+        List<List<Integer>> res = new ArrayList<>();
+        for (int i = 0 ; i < t.size(); i++){
+            res.add(new ArrayList<>());
+        }
+        for (int i = 0 ; i < t.size(); i++){
+            List<Integer> temp = t.get(i);
+            int indexcounter = 1;
+            for (int j = 0 ; j < temp.size(); j++){
+                if (temp.get(j) == 1){
+                    res.get(i).add(indexcounter);
+                }
+                indexcounter++;
+            }
 
+        }
+        return res;
+    }
     public void postAddZero(List<Integer> res){
         for (int i = 0; i < postAdd; i++) {
             res.add(0);

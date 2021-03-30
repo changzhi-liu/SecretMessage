@@ -1,0 +1,20 @@
+1. install:
+        a. mysql, use 8.0.20 or above
+        b. intellj idea (community server will work)
+        c. java 8 (can be download after installed intellj)
+        d. clone the git to a local file. After cloned, you should have a file name demo under your path.
+        d. a way to send http request (curl command or sth else). I prefer postman.
+2. intellj import project
+        a. click file - new - project from existing source -> choose demo -> select as maven project -> finish import
+           once imported, give intellj a little time to install all required dependency.
+3. start mysql
+        a. create data using data.sql under resources file
+        b. check application.yml, make sure it has the correct config for mysql (username, pass, port, db name)
+4. run program using demo/src/main/java/com/SecureMessage/demo/DemoApplication.
+5. send an http get request with username a, password a, index 5
+    request looks like http://localhost:9090/query?username=a&password=a&index=5
+
+    if using data.sql, should get 1K0IYR7ZUcX2HDXuVnOJ as response.
+    console will also generate the attacker's observation.
+
+note for part 5, username, password, index and response is subject matter to data.sql, you can use your only data as well;

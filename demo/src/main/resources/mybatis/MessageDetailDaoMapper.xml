@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.SecureMessage.demo.mapper.MessageDetailDaoMapper" >
+  <resultMap id="BaseResultMap" type="com.SecureMessage.demo.model.MessageDetailDao" >
+    <id column="msg_index" property="msgIndex" jdbcType="BIGINT" />
+    <result column="sender" property="sender" jdbcType="VARCHAR" />
+    <result column="reciever" property="reciever" jdbcType="VARCHAR" />
+    <result column="sender_id" property="senderId" jdbcType="BIGINT" />
+    <result column="reciever_id" property="recieverId" jdbcType="BIGINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="validation" property="validation" jdbcType="INTEGER" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    msg_index, sender, reciever, sender_id, reciever_id, content, validation, send_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.SecureMessage.demo.model.MessageDetailDaoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from message
+    where msg_index = #{msgIndex,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from message
+    where msg_index = #{msgIndex,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.SecureMessage.demo.model.MessageDetailDaoExample" >
+    delete from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.SecureMessage.demo.model.MessageDetailDao" >
+    insert into message (msg_index, sender, reciever, 
+      sender_id, reciever_id, content, 
+      validation, send_time)
+    values (#{msgIndex,jdbcType=BIGINT}, #{sender,jdbcType=VARCHAR}, #{reciever,jdbcType=VARCHAR}, 
+      #{senderId,jdbcType=BIGINT}, #{recieverId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, 
+      #{validation,jdbcType=INTEGER}, #{sendTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.SecureMessage.demo.model.MessageDetailDao" >
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="msgIndex != null" >
+        msg_index,
+      </if>
+      <if test="sender != null" >
+        sender,
+      </if>
+      <if test="reciever != null" >
+        reciever,
+      </if>
+      <if test="senderId != null" >
+        sender_id,
+      </if>
+      <if test="recieverId != null" >
+        reciever_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="validation != null" >
+        validation,
+      </if>
+      <if test="sendTime != null" >
+        send_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="msgIndex != null" >
+        #{msgIndex,jdbcType=BIGINT},
+      </if>
+      <if test="sender != null" >
+        #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="reciever != null" >
+        #{reciever,jdbcType=VARCHAR},
+      </if>
+      <if test="senderId != null" >
+        #{senderId,jdbcType=BIGINT},
+      </if>
+      <if test="recieverId != null" >
+        #{recieverId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="validation != null" >
+        #{validation,jdbcType=INTEGER},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update message
+    <set >
+      <if test="record.msgIndex != null" >
+        msg_index = #{record.msgIndex,jdbcType=BIGINT},
+      </if>
+      <if test="record.sender != null" >
+        sender = #{record.sender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reciever != null" >
+        reciever = #{record.reciever,jdbcType=VARCHAR},
+      </if>
+      <if test="record.senderId != null" >
+        sender_id = #{record.senderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.recieverId != null" >
+        reciever_id = #{record.recieverId,jdbcType=BIGINT},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.validation != null" >
+        validation = #{record.validation,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendTime != null" >
+        send_time = #{record.sendTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update message
+    set msg_index = #{record.msgIndex,jdbcType=BIGINT},
+      sender = #{record.sender,jdbcType=VARCHAR},
+      reciever = #{record.reciever,jdbcType=VARCHAR},
+      sender_id = #{record.senderId,jdbcType=BIGINT},
+      reciever_id = #{record.recieverId,jdbcType=BIGINT},
+      content = #{record.content,jdbcType=VARCHAR},
+      validation = #{record.validation,jdbcType=INTEGER},
+      send_time = #{record.sendTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.SecureMessage.demo.model.MessageDetailDao" >
+    update message
+    <set >
+      <if test="sender != null" >
+        sender = #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="reciever != null" >
+        reciever = #{reciever,jdbcType=VARCHAR},
+      </if>
+      <if test="senderId != null" >
+        sender_id = #{senderId,jdbcType=BIGINT},
+      </if>
+      <if test="recieverId != null" >
+        reciever_id = #{recieverId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="validation != null" >
+        validation = #{validation,jdbcType=INTEGER},
+      </if>
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where msg_index = #{msgIndex,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.SecureMessage.demo.model.MessageDetailDao" >
+    update message
+    set sender = #{sender,jdbcType=VARCHAR},
+      reciever = #{reciever,jdbcType=VARCHAR},
+      sender_id = #{senderId,jdbcType=BIGINT},
+      reciever_id = #{recieverId,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
+      validation = #{validation,jdbcType=INTEGER},
+      send_time = #{sendTime,jdbcType=TIMESTAMP}
+    where msg_index = #{msgIndex,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.SecureMessage.demo.model.MessageDetailDaoExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

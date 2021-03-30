@@ -4,6 +4,7 @@ import com.SecureMessage.demo.controller.GenerateQueryList;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -38,11 +39,28 @@ public class GenerateQueryListTest {
 
         List<Integer> t = gq.ListXor(res.get(0), res.get(1), res.get(2));
         assert(t.equals(res.get(3)));
+
+        List<List<Integer>> t2 = gq.convertToRow(res);
+        List<Integer> first = arrayToList(new int[]{1,2,3});
+        assert(t2.get(0).equals(first));
+        List<Integer> second = arrayToList(new int[]{1,3});
+        assert(t2.get(1).equals(second));
+        List<Integer> third = arrayToList(new int[]{1});
+        assert(t2.get(2).equals(third));
     }
     @Test
     public void generateList(){
         List<List<Integer>> res = gq.getList(5);
         System.out.println(res);
+    }
+
+    private List<Integer> arrayToList(int[] ada){
+        List<Integer> res = new ArrayList<Integer>(ada.length);
+        for (int i : ada)
+        {
+            res.add(i);
+        }
+        return res;
     }
 
 }
