@@ -5,9 +5,6 @@ CREATE TABLE USERDETAIL (
   password VARCHAR(50) NOT null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
-
 INSERT INTO UserDetail VALUES (1, 'Mike', '81dc9bdb52d04dc20036dbd8313ed055');
 
 CREATE TABLE IF NOT EXISTS message (
@@ -30,16 +27,34 @@ CREATE TABLE IF NOT EXISTS friends (
     primary key (sender_id,reciever_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table if not exists friendspk (
+    friendspk_id BIGINT(40) NOT NULL auto_increment  primary key,
+    sender_id BIGINT(40) NOT NULL,
+    receiver_id BIGINT(40) NOT NULL,
+	key_sender varchar(100) Not Null,
+    key_receiver varchar(100),
+    receiver_decided bit,
+    sender_retrieved bit
+)
+INSERT INTO friendspk VALUES (1, 2, '7465178946217931',null,0,0);
+
+
 INSERT INTO UserDetail VALUES (1, 'a', 'a');
 INSERT INTO UserDetail VALUES (2, 'b', 'b');
 INSERT INTO UserDetail VALUES (3, 'c', 'c');
+INSERT INTO UserDetail VALUES (4, 'd', 'd');
+INSERT INTO UserDetail VALUES (5, 'e', 'e');
+INSERT INTO UserDetail VALUES (6, 'f', 'f');
+INSERT INTO UserDetail VALUES (7, 'g', 'g');
 
-INSERT INTO friends VALUES (1, 2, 100, 100);
-INSERT INTO friends VALUES (2, 1, 149, 149);
-INSERT INTO friends VALUES (3, 1, 200, 200);
-INSERT INTO friends VALUES (2, 3, 249, 249);
-INSERT INTO friends VALUES (3, 2, 300, 300);
-INSERT INTO friends VALUES (1, 3, 349, 349);
+
+INSERT INTO friends VALUES (1, 2, 50, 100);
+INSERT INTO friends VALUES (2, 1, 101, 151);
+INSERT INTO friends VALUES (3, 1, 152, 200);
+INSERT INTO friends VALUES (2, 3, 201, 251);
+INSERT INTO friends VALUES (3, 2, 252, 300);
+INSERT INTO friends VALUES (1, 3, 301, 351);
+
 
 INSERT INTO  message VALUES (1, "c", "a", 2, 0, "n7QdQ81h24m5OIshw0Yo", 0, "2021-03-30 11:47:13");
 INSERT INTO  message VALUES (2, "a", "c", 0, 2, "4S07DLVQdB9kIszXGleH", 0, "2021-03-30 11:47:13");

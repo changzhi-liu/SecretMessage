@@ -70,6 +70,11 @@
                enableCountByExample="false" enableUpdateByExample="true" enableDeleteByExample="true"
                enableSelectByExample="true" selectByExampleQueryId="true">
         </table>
+        <table tableName="friendspk" domainObjectName="friendspkDao"
+               enableCountByExample="false" enableUpdateByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" selectByExampleQueryId="true">
+        </table>
+
 
 
 

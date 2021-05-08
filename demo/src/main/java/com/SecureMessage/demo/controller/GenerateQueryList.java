@@ -11,6 +11,7 @@ import java.util.Random;
 public class GenerateQueryList {
 
     final int postAdd = 20;
+    final int oneCounts = 3;
     public List<List<Integer>> getList(int index){
         List<List<Integer>> res = new  LinkedList<>();
         
@@ -20,8 +21,8 @@ public class GenerateQueryList {
         }
         origin.add(1); // for index
         postAddZero(origin);
-        List<Integer> b = randomList(3, origin.size());
-        List<Integer> c = randomList(3, origin.size());
+        List<Integer> b = randomList(oneCounts, origin.size());
+        List<Integer> c = randomList(oneCounts, origin.size());
         List<Integer> d = ListXor(origin,b,c);
 
         res.add(origin);
@@ -32,7 +33,7 @@ public class GenerateQueryList {
         return res;
     }
     public List<List<Integer>> convertToRow(List<List<Integer>> t){
-        List<List<Integer>> res = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>(); // 0100011 - > {2,6,7}
         for (int i = 0 ; i < t.size(); i++){
             res.add(new ArrayList<>());
         }

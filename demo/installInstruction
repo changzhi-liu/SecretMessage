@@ -3,7 +3,7 @@
         b. intellj idea (community server will work)
         c. java 8 (can be download after installed intellj)
         d. clone the git to a local file. After cloned, you should have a file name demo under your path.
-        d. a way to send http request (curl command or sth else). I prefer postman.
+        e. a way to send http request (curl command or sth else). I prefer postman.
 2. intellj import project
         a. click file - new - project from existing source -> choose demo -> select as maven project -> finish import
            once imported, give intellj a little time to install all required dependency.

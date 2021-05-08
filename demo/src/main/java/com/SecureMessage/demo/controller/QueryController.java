@@ -45,7 +45,7 @@ public class QueryController {
 
         List<List<Integer>> lists = gq.getList(index);
         //queryService
-        List<List<Integer>> queryList = gq.convertToRow(lists);
+        List<List<Integer>> queryList = gq.convertToRow(lists); //{{3,7,9}. {4,1,7}}
         List<String> allQueryResults = new ArrayList<>();
         for ( int i = 1; i < queryList.size(); i++){
             List<Integer> t = queryList.get(i);
@@ -63,6 +63,7 @@ public class QueryController {
         //log client get this
         logger.info("The real message calculated by client is {}!" , res);
 
+        //for demo purpose
         for (Integer row : queryList.get(0)){
             MessageDetailDao msg =  messageBo.getMsgByIndex(row);
             allQueryResults.add(msg.getContent());
@@ -72,7 +73,6 @@ public class QueryController {
         return res;
 
     }
-
 
 
 }

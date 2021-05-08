@@ -4,6 +4,7 @@ package com.SecureMessage.demo.bo;
 import com.SecureMessage.demo.mapper.MessageDetailDaoMapper;
 import com.SecureMessage.demo.model.MessageDetailDao;
 import com.SecureMessage.demo.model.MessageDetailDaoExample;
+import com.SecureMessage.demo.requestmodel.WriteRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,11 +17,20 @@ public class MessageBo {
         MessageDetailDaoExample daoExample = new MessageDetailDaoExample();
         MessageDetailDaoExample.Criteria criteria = daoExample.createCriteria();
         criteria.andMsgIndexEqualTo(index);
-        List<MessageDetailDao> userDetailDaos = mapper.selectByExample(daoExample);
-        if (userDetailDaos == null || userDetailDaos.size() == 0){
+        List<MessageDetailDao> MessageDetailDaos = mapper.selectByExample(daoExample);
+        if (MessageDetailDaos == null || MessageDetailDaos.size() == 0){
             return null;
         }
 
-        return userDetailDaos.get(0);
+        return MessageDetailDaos.get(0);
     }
+
+    public boolean updateSingleMessageByKey(WriteRequest req){
+        MessageDetailDao input = new MessageDetailDao();
+        input.setContent(req.getMessage());
+        input.setMsgIndex(req.getIndex());
+        int res = mapper.updateByPrimaryKeySelective(input);
+        return res == 0 ? false : true;
+    }
+
 }
