@@ -2,8 +2,8 @@ package com.SecureMessage.demo.controller;
 
 import com.SecureMessage.demo.bo.MessageBo;
 import com.SecureMessage.demo.bo.UserBo;
-import com.SecureMessage.demo.model.userDetailDao;
 import com.SecureMessage.demo.requestmodel.WriteRequest;
+import com.SecureMessage.demo.utils.CryptoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

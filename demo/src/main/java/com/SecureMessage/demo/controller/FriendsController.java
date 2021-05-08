@@ -5,6 +5,7 @@ import com.SecureMessage.demo.bo.UserBo;
 import com.SecureMessage.demo.model.friendspkDao;
 import com.SecureMessage.demo.model.userDetailDao;
 import com.SecureMessage.demo.requestmodel.*;
+import com.SecureMessage.demo.utils.CryptoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

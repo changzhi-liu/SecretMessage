@@ -1,15 +1,11 @@
 package com.SecureMessage.demo.bo;
 
 import com.SecureMessage.demo.mapper.userDetailDaoMapper;
-import com.SecureMessage.demo.model.MessageDetailDao;
-import com.SecureMessage.demo.model.MessageDetailDaoExample;
 import com.SecureMessage.demo.model.userDetailDao;
 import com.SecureMessage.demo.model.userDetailDaoExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sun.security.util.ArrayUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 @Component
 public class UserBo {

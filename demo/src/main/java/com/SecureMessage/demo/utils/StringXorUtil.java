@@ -1,11 +1,11 @@
-package com.SecureMessage.demo.controller;
+package com.SecureMessage.demo.utils;
 
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class StringXor {
+public class StringXorUtil {
     public String twoStringXor(String str1, String str2) {
         byte b1[] = str1.getBytes();
         byte b2[] = str2.getBytes();

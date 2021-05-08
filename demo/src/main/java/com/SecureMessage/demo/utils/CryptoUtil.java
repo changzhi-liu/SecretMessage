@@ -1,4 +1,4 @@
-package com.SecureMessage.demo.controller;
+package com.SecureMessage.demo.utils;
 import org.springframework.stereotype.Component;
 
 import java.security.*;

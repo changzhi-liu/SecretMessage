@@ -2,6 +2,7 @@ package com.SecureMessage.demo.controller;
 
 import com.SecureMessage.demo.bo.UserBo;
 import com.SecureMessage.demo.model.userDetailDao;
+import com.SecureMessage.demo.utils.GenerateQueryListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
 
     @Autowired
-    private GenerateQueryList gq;
+    private GenerateQueryListUtil gq;
 
     @Autowired
     private UserBo userBo;

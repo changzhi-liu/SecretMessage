@@ -17,4 +17,6 @@ logging:
 #  level:
 #    org.springfromework: debug
 
+app:
+  key-file-location: classpath:keys.txt;
 

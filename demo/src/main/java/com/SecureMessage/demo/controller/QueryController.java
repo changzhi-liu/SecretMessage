@@ -4,6 +4,8 @@ import com.SecureMessage.demo.bo.MessageBo;
 import com.SecureMessage.demo.bo.UserBo;
 import com.SecureMessage.demo.model.MessageDetailDao;
 import com.SecureMessage.demo.model.userDetailDao;
+import com.SecureMessage.demo.utils.GenerateQueryListUtil;
+import com.SecureMessage.demo.utils.StringXorUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +21,9 @@ import java.util.List;
 public class QueryController {
 
     @Autowired
-    private GenerateQueryList gq;
+    private GenerateQueryListUtil gq;
     @Autowired
-    private StringXor stringXor;
+    private StringXorUtil stringXor;
     @Autowired
     private UserBo userBo;
     @Autowired

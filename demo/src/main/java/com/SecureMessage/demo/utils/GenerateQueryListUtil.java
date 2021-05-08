@@ -1,4 +1,4 @@
-package com.SecureMessage.demo.controller;
+package com.SecureMessage.demo.utils;
 
 import org.springframework.stereotype.Component;
 
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 // note the generated list index 0 means get 1s row
 @Component
-public class GenerateQueryList {
+public class GenerateQueryListUtil {
 
     final int postAdd = 20;
     final int oneCounts = 3;

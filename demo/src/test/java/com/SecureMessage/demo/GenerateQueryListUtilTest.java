@@ -1,16 +1,13 @@
 package com.SecureMessage.demo;
 
-import com.SecureMessage.demo.controller.GenerateQueryList;
-import org.junit.jupiter.api.BeforeAll;
+import com.SecureMessage.demo.utils.GenerateQueryListUtil;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 
-public class GenerateQueryListTest {
-    private GenerateQueryList gq = new GenerateQueryList();
+public class GenerateQueryListUtilTest {
+    private GenerateQueryListUtil gq = new GenerateQueryListUtil();
 
 
 
