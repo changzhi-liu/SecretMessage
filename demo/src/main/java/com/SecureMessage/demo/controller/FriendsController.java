@@ -6,6 +6,7 @@ import com.SecureMessage.demo.model.friendspkDao;
 import com.SecureMessage.demo.model.userDetailDao;
 import com.SecureMessage.demo.requestmodel.*;
 import com.SecureMessage.demo.utils.CryptoUtil;
+import com.SecureMessage.demo.utils.LocalkeyPairsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -117,7 +118,7 @@ public class FriendsController {
             return "internal cryption error, unable to calculate shared key";
         }
         //todo store sharedkey
-
+//        LocalkeyPairsUtil.getInstance().putSharedKey();
         req.setSenderRetrieved(true);
         friendPkBo.updateRequestStatus(req);
         return "friendship settled";
