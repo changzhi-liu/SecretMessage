@@ -13,14 +13,11 @@ public class WriteController {
     private UserBo userBo;
     @Autowired
     private MessageBo messageBo;
-    @RequestMapping(value = "/sendmessage",method= RequestMethod.POST)
+    @RequestMapping(value = "/sendsinglemessage",method= RequestMethod.POST)
     public String userLogin(@RequestBody WriteRequest writeRequest, HttpSession httpSession){
-        //some how get the key
-
-        //encry the message
-//        String encoded = cryptoUtil.encryptText(writeRequest.getMessage(), );
-//        writeRequest.setMessage(encoded);
-        //insert the message
+        if (httpSession.getAttribute("uid") == null) {
+            return "session not found";
+        }
         boolean res = messageBo.updateSingleMessageByKey(writeRequest);
         return res == true ? "updated" : "fail";
     }

@@ -25,21 +25,12 @@ public class QueryController {
     public String userLogin(@RequestParam("index") int index,
                             HttpSession httpSession
     ){
-//        Result res = new Result();
         if (httpSession.getAttribute("uid") == null) {
-//            res = new Result();
-//            res.setAttributes("msg", );
-
             return "session not found";
-
         }
         String res1 = "";
         Logger logger = LogManager.getLogger(this.getClass());
         MessageDetailDao msg =  messageBo.getMsgByIndex(index);
-//        res.setAttributes("msg","login session requires");
-//        res.setAttributes("items", msg);
         return msg == null ? "" : msg.getContent();
-
     }
-
 }
