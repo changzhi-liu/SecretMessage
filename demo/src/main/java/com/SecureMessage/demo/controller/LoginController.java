@@ -24,6 +24,13 @@ public class LoginController {
     }
     @RequestMapping("/login")
     public String userLogin(@RequestParam("username") String username, @RequestParam("password") String pwd, HttpSession httpSession){
+        if (httpSession.getAttribute("uid") != null){
+
+            userDetailDao user = userBo.getUserById((Long)httpSession.getAttribute("uid") );
+            httpSession.setAttribute("uid", user.getUserId());
+            return "success";
+
+        }
         if (username == null){
             return "fail";
         }
@@ -32,7 +39,8 @@ public class LoginController {
             return "fail";
         }
         if (user.getPassword().equals(pwd)){
-            return "chatroom";
+            httpSession.setAttribute("uid", user.getUserId());
+            return "success";
         }
         return "fail";
     }
