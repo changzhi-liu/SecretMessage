@@ -26,7 +26,7 @@ public class FriendsController {
     @Autowired
     private UserBo userBo;
     @RequestMapping("/searchfriends")
-    public UserBriefResponse searchfriends(@RequestParam("username") Long userId, HttpSession httpSession){
+    public UserBriefResponse searchfriends(@RequestParam("user_id") Long userId, HttpSession httpSession){
         //check http
         userDetailDao user = userBo.getUserById(userId);
         UserBriefResponse res = null;
@@ -64,6 +64,7 @@ public class FriendsController {
     public String acceptFriends(@RequestBody AcceptFriendsRequest acceptFriendsRequest, HttpSession httpSession) {
 
         friendspkDao request = friendPkBo.getByPk(acceptFriendsRequest.getFriendPkId());
+
         if (request.getReceiverDecided() == true){
             return "already accepted";
         }
@@ -81,6 +82,7 @@ public class FriendsController {
             } catch (Exception e){
                 return "internal cryption error, unable to generate key";
             }
+
             request.setReceiverDecided(true);
             String sharedKey;
             try {

@@ -18,6 +18,8 @@ public class WriteController {
     private MessageBo messageBo;
     @RequestMapping(value = "/sendmessage",method= RequestMethod.POST)
     public String userLogin(@RequestBody WriteRequest writeRequest, HttpSession httpSession){
+
+        //todo remember to padding the message to same length
         //some how get the key
 
         //encry the message
