@@ -62,7 +62,7 @@ public class LoginController {
         }
         if (user.getPassword().equals(userLogin.password)){
             httpSession.setAttribute("uid", user.getUserId());
-
+//            request.getCookies()[0].setHttpOnly(false);
             if (fakeReadConfig.equals("true")){
                 //开启假读线程
             }
