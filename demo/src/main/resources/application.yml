@@ -1,5 +1,9 @@
 server:
   port: 9090
+  servlet:
+    session:
+      cookie:
+        http-only: false
 spring:
   application:
     name: demo
