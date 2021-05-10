@@ -63,7 +63,7 @@ public class QueryController {
                 allQueryResults.add(message);
 
                 //log as server attacker
-                logger.info("attacker on server {} observing client {} getting message {} from user {}!", i, httpSession.getId(),message);
+                logger.info("attacker on server {} observing client {} getting message {} from user {}!", i, httpSession.getAttribute("uid"),message);
             }
         }
 //        for ( int i = 1; i < queryList.size(); i++){
@@ -95,7 +95,12 @@ public class QueryController {
         //decode string
         //todo using index to get key
         String decoded = "";
-        String sharedKey = LocalkeyPairsUtil.getInstance().getSharedKey(1L);
+        int[] senderRec = LocalRowToSenderReceiverUtil.getIndex(new Long(index));
+        if (senderRec == null || senderRec[1] !=  (Long)httpSession.getAttribute("uid")){
+            return "range is not correct";
+        }
+
+        String sharedKey = LocalkeyPairsUtil.getInstance().getSharedKey(new Long (senderRec[0]));
         try {
             decoded = cryptoUtil.decryptText(res, sharedKey);
         } catch (Exception e) {
