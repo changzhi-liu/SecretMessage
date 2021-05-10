@@ -96,12 +96,12 @@ public class FriendsController {
             request.setReceiverDecided(true);
             String sharedKey;
             try {
-                sharedKey = cryptoUtil.GetSharedKey(keys[0],request.getKeySender());
+                sharedKey = cryptoUtil.GetSharedKey(keys[1],request.getKeySender());
             } catch (Exception e) {
                 return "internal cryption error, unable to calculate shared key";
             }
             //todo store to local file;
-            request.setKeyReceiver(keys[1]);
+            request.setKeyReceiver(keys[0]);
             friendPkBo.updateRequestStatus(request);
             LocalkeyPairsUtil.getInstance().putMyPrivateKey( request.getSenderId(), keys[1]);
             LocalkeyPairsUtil.getInstance().putSharedKey(request.getSenderId(), sharedKey);
