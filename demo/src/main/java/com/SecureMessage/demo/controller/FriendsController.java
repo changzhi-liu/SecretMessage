@@ -6,6 +6,7 @@ import com.SecureMessage.demo.model.friendspkDao;
 import com.SecureMessage.demo.model.userDetailDao;
 import com.SecureMessage.demo.requestmodel.*;
 import com.SecureMessage.demo.utils.CryptoUtil;
+import com.SecureMessage.demo.utils.LocalkeyPairsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,12 +55,14 @@ public class FriendsController {
             return "internal cryption error, unable to generate key";
         }
         friendspkDao newFrendReq = new friendspkDao();
-        newFrendReq.setKeySender(keys[1]);
+        newFrendReq.setKeySender(keys[0]);
         newFrendReq.setReceiverId((Long)(param.get("friendId")));
         newFrendReq.setSenderId((Long)httpSession.getAttribute("uid"));
         newFrendReq.setReceiverDecided(false);
         newFrendReq.setSenderRetrieved(false);
         int res = friendPkBo.insertOneRow(newFrendReq);
+        // store private key
+        LocalkeyPairsUtil.getInstance().putMyPrivateKey( (Long)(param.get("friendId")), keys[1]);
         return res == 0 ? "false" : "true";
         // pk = test.generatePK();
         // insert pk in db
@@ -93,15 +96,15 @@ public class FriendsController {
             request.setReceiverDecided(true);
             String sharedKey;
             try {
-                sharedKey = cryptoUtil.GetSharedKey(request.getKeySender(), keys[0]);
+                sharedKey = cryptoUtil.GetSharedKey(keys[0],request.getKeySender());
             } catch (Exception e) {
                 return "internal cryption error, unable to calculate shared key";
             }
             //todo store to local file;
-
-
             request.setKeyReceiver(keys[1]);
             friendPkBo.updateRequestStatus(request);
+            LocalkeyPairsUtil.getInstance().putMyPrivateKey( request.getSenderId(), keys[1]);
+            LocalkeyPairsUtil.getInstance().putSharedKey(request.getSenderId(), sharedKey);
             return "accepted";
         }
 
@@ -123,17 +126,19 @@ public class FriendsController {
             return "request not found or not accepted yet";
         }
         String sharedKey;
+        String myPrivateKey = LocalkeyPairsUtil.getInstance().getMyPrivateKey(req.getReceiverId());
+        // use my key;
+        try {
+            sharedKey = cryptoUtil.GetSharedKey(myPrivateKey, req.getKeyReceiver());
+        } catch (Exception e) {
+            return "internal cryption error, unable to calculate shared key";
+        }
 
-        //todo used my key;
-//        try {
-//            sharedKey = cryptoUtil.GetSharedKey(req.getKeyReceiver(), myKey );
-//        } catch (Exception e) {
-//            return "internal cryption error, unable to calculate shared key";
-//        }
-        //todo store sharedkey
-//        LocalkeyPairsUtil.getInstance().putSharedKey();
+
         req.setSenderRetrieved(true);
         friendPkBo.updateRequestStatus(req);
+        //store sharedkey
+        LocalkeyPairsUtil.getInstance().putSharedKey(req.getReceiverId(),sharedKey);
         return "friendship settled";
     }
 //    @RequestMapping("/resetAllFriendsKey")

@@ -8,10 +8,25 @@ public class LocalkeyPairsUtil implements Serializable {
 
     private static LocalkeyPairsUtil instance = new LocalkeyPairsUtil();
     String keyLocal = "src/main/resources/keys.txt";
-
+    //string[] 0 is my key, 1 is sharedkey
     Map<Long, String[]> keyPairs = new HashMap<>();
 
     private LocalkeyPairsUtil() {
+    }
+
+    public void printAllKeys(){
+        for (Map.Entry<Long, String[]> entry : keyPairs.entrySet()) {
+            Long friendsId = entry.getKey();
+            String[] value = entry.getValue();
+            System.out.println("my public key is : " + value[0]);
+            System.out.println("my friends " + friendsId + "shared key with me is : " + value[0]);
+        }
+    }
+
+    public void printKeys(Long friendsId){
+        String[] value = keyPairs.get(friendsId);
+        System.out.println("my public key is : "+ value[0]);
+        System.out.println("my friends " + friendsId + "shared key with me is : "+ value[0]);
     }
 
     public static LocalkeyPairsUtil getInstance(){
@@ -32,6 +47,7 @@ public class LocalkeyPairsUtil implements Serializable {
         }
         return null;
     };
+
     public void writeToFile(){
         try {
 
@@ -76,16 +92,16 @@ public class LocalkeyPairsUtil implements Serializable {
 
         writeToFile();
     }
-//    public static void main(String[] args) {
-//        LocalkeyPairs ada = LocalkeyPairs.getInstance();
-//
-//        System.out.println(ada.getMyPrivateKey(2L));
-//        System.out.println(ada.getMyPrivateKey(3L));
-//        ada.putMyPrivateKey(3L, "ada");
-//        System.out.println(ada.getMyPrivateKey(3L));
-//        ada.putSharedKey(3L, "adashared");
-//        System.out.println(ada.getSharedKey(3L));
-//        ada.putMyPrivateKey(2L, "java");
-//
-//    }
+    public static void main(String[] args) {
+        LocalkeyPairsUtil ada = LocalkeyPairsUtil.getInstance();
+
+        System.out.println(ada.getMyPrivateKey(2L));
+        System.out.println(ada.getMyPrivateKey(3L));
+        ada.putMyPrivateKey(3L, "ada");
+        ada.printKeys(3L);
+        ada.putSharedKey(3L, "adashared");
+        System.out.println(ada.getSharedKey(3L));
+        ada.printAllKeys();
+
+    }
 }

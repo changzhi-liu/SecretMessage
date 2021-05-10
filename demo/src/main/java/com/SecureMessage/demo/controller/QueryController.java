@@ -5,9 +5,7 @@ import com.SecureMessage.demo.bo.UserBo;
 import com.SecureMessage.demo.config.ServerPortConfig;
 import com.SecureMessage.demo.model.MessageDetailDao;
 import com.SecureMessage.demo.model.userDetailDao;
-import com.SecureMessage.demo.utils.GenerateQueryListUtil;
-import com.SecureMessage.demo.utils.SendToServerUtil;
-import com.SecureMessage.demo.utils.StringXorUtil;
+import com.SecureMessage.demo.utils.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,8 @@ import java.util.List;
 
 @RestController
 public class QueryController {
-
+    @Autowired
+    private CryptoUtil cryptoUtil;
     @Autowired
     private GenerateQueryListUtil gq;
     @Autowired
@@ -56,7 +55,7 @@ public class QueryController {
             List<Integer> t = queryList.get(i);
             String server_port = server_ports.get(i-1);
             for (Integer row : t) {
-                String url = "http://localhost:"+server_port+"/querysingle" + "?index=" + String.valueOf(index);
+                String url = "http://localhost:"+server_port+"/querysingle" + "?index=" + String.valueOf(row);
                 String message = sendToServerUtil.sendGetMessageToServer(url, request);
                 if (message.equals("session not found")){
                     return "login required";
@@ -80,7 +79,12 @@ public class QueryController {
         String res = stringXor.xorList(allQueryResults);
         //log client get this
         logger.info("The real message calculated by client is {}!" , res);
-
+        for (int x = 0; x < res.length(); x++){
+            if (res.charAt(x) == 0){
+                res = res.substring(0,x);
+                break;
+            }
+        }
         //for demo purpose
         for (Integer row : queryList.get(0)){
             MessageDetailDao msg =  messageBo.getMsgByIndex(row);
@@ -88,7 +92,18 @@ public class QueryController {
             //log as server attacker
             logger.info("(Direct get from db)The real message client want is {} from user {}!" , msg.getContent(), msg.getSenderId());
         }
-        return res;
+        //decode string
+        //todo using index to get key
+        String decoded = "";
+        String sharedKey = LocalkeyPairsUtil.getInstance().getSharedKey(1L);
+        try {
+            decoded = cryptoUtil.decryptText(res, sharedKey);
+        } catch (Exception e) {
+            return "encoding error, check if friendship is established";
+        }
+
+
+        return decoded;
 
     }
 
