@@ -31,8 +31,8 @@ create table if not exists friendspk (
     friendspk_id BIGINT(40) NOT NULL auto_increment  primary key,
     sender_id BIGINT(40) NOT NULL,
     receiver_id BIGINT(40) NOT NULL,
-	key_sender varchar(100) Not Null,
-    key_receiver varchar(100),
+	key_sender varchar(200) Not Null,
+    key_receiver varchar(200),
     receiver_decided bit,
     sender_retrieved bit
 )

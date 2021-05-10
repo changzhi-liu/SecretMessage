@@ -6,16 +6,14 @@ import com.SecureMessage.demo.model.friendspkDao;
 import com.SecureMessage.demo.model.userDetailDao;
 import com.SecureMessage.demo.requestmodel.*;
 import com.SecureMessage.demo.utils.CryptoUtil;
-import com.SecureMessage.demo.utils.LocalkeyPairsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
+@RestController
 public class FriendsController {
 
 
@@ -39,8 +37,16 @@ public class FriendsController {
     // need a map stored locally: Map<>: key -> opponent_id, String[]{my private key, share key}
     // input: firendsId, privatekey
     // send a friend request with public key, return a secret key to frontend
-    @RequestMapping(value = "/addFriends", method = RequestMethod.POST)
-    public String addFriends(@RequestBody AddFriendsRequest addFriendsRequest, HttpSession httpSession) {
+
+
+
+//    @RequestMapping("/newf")
+//    public String newf(@RequestBody Map<String,Object> param, HttpSession httpSession){
+//
+//        return "fail";
+//    }
+    @RequestMapping("/newf" )  //这里传一个"friendId":int的格式
+    public String newf(@RequestBody Map<String,Long> param, HttpSession httpSession) {
         String[] keys = new String[2];
         try{
             keys = cryptoUtil.GetKey();
@@ -48,8 +54,9 @@ public class FriendsController {
             return "internal cryption error, unable to generate key";
         }
         friendspkDao newFrendReq = new friendspkDao();
-        newFrendReq.setKeySender(keys[0]);
-        newFrendReq.setSenderId(Long.parseLong(httpSession.getId()));
+        newFrendReq.setKeySender(keys[1]);
+        newFrendReq.setReceiverId((Long)(param.get("friendId")));
+        newFrendReq.setSenderId((Long)httpSession.getAttribute("uid"));
         newFrendReq.setReceiverDecided(false);
         newFrendReq.setSenderRetrieved(false);
         int res = friendPkBo.insertOneRow(newFrendReq);
@@ -68,7 +75,7 @@ public class FriendsController {
         if (request.getReceiverDecided() == true){
             return "already accepted";
         }
-        if (request.getReceiverId() != Long.parseLong(httpSession.getId())){
+        if (!request.getReceiverId().equals((Long)httpSession.getAttribute("uid"))){
             return "unable to authorize others requests";
         }
         if (acceptFriendsRequest.isAccpted() == false) {
@@ -86,12 +93,14 @@ public class FriendsController {
             request.setReceiverDecided(true);
             String sharedKey;
             try {
-                sharedKey = cryptoUtil.GetSharedKey(keys[0], request.getKeyReceiver());
+                sharedKey = cryptoUtil.GetSharedKey(request.getKeySender(), keys[0]);
             } catch (Exception e) {
                 return "internal cryption error, unable to calculate shared key";
             }
             //todo store to local file;
 
+
+            request.setKeyReceiver(keys[1]);
             friendPkBo.updateRequestStatus(request);
             return "accepted";
         }
@@ -101,24 +110,26 @@ public class FriendsController {
     @RequestMapping("/checkFriendsRequestToMe")
     public List<friendspkDao> checkFriendsRequestToMe(HttpSession httpSession) {
         // find all request where bit = false; return (pk, friends_rel_id)
-        return friendPkBo.getUnhandleRequest(Long.parseLong(httpSession.getId()));
+        return friendPkBo.getUnhandleRequest((Long)httpSession.getAttribute("uid"));
     }
 
 
 
     // check if a friend request is accepted.
     @RequestMapping("/checkNewFriends")
-    public String checkNewFriends(@RequestParam("username") Long sender_Id, HttpSession httpSession) {
-        friendspkDao req = friendPkBo.getSingleRequestBySenderReceiver(Long.parseLong(httpSession.getId()), sender_Id);
+    public String checkNewFriends(@RequestParam("") Long receiver_Id, HttpSession httpSession) {
+        friendspkDao req = friendPkBo.getSingleRequestBySenderReceiver((Long)httpSession.getAttribute("uid"), receiver_Id);
         if (req == null || req.getReceiverDecided() == false){
             return "request not found or not accepted yet";
         }
         String sharedKey;
-        try {
-            sharedKey = cryptoUtil.GetSharedKey(req.getKeySender(), req.getKeyReceiver());
-        } catch (Exception e) {
-            return "internal cryption error, unable to calculate shared key";
-        }
+
+        //todo used my key;
+//        try {
+//            sharedKey = cryptoUtil.GetSharedKey(req.getKeyReceiver(), myKey );
+//        } catch (Exception e) {
+//            return "internal cryption error, unable to calculate shared key";
+//        }
         //todo store sharedkey
 //        LocalkeyPairsUtil.getInstance().putSharedKey();
         req.setSenderRetrieved(true);

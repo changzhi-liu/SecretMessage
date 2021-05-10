@@ -22,17 +22,7 @@ import static javax.xml.bind.DatatypeConverter.parseHexBinary;
 @Component
 public class CryptoUtil {
 
-    public void main(String[] args) throws Exception {
-        String[] keyPair1 = GetKey();
-        String[] keyPair2 = GetKey();
-        String shared1 = GetSharedKey(keyPair1[1],keyPair2[0]);
-        String shared2 = GetSharedKey(keyPair2[1],keyPair1[0]);
-        System.out.println(shared1);
-        System.out.println(shared2);
-        String encryptedText= encryptText("hello world",shared1);
-        String text = decryptText(encryptedText,shared2);
-        System.out.println(text);
-    }
+
     // return a String[]
     // index 0 public key
     // index 1 private key
@@ -118,5 +108,19 @@ public class CryptoUtil {
         byte[] byteCipherText = parseHexBinary(CipherText);
         byte[] bytePlainText = aesCipher.doFinal(byteCipherText);
         return new String(bytePlainText);
+    }
+
+
+    public static void main(String[] args) throws Exception {
+        CryptoUtil ad = new CryptoUtil();
+        String[] keyPair1 = ad.GetKey();
+        String[] keyPair2 =ad. GetKey();
+        String shared1 = ad.GetSharedKey(keyPair1[1],keyPair2[0]);
+        String shared2 = ad.GetSharedKey(keyPair2[1],keyPair1[0]);
+        System.out.println(shared1);
+        System.out.println(shared2);
+        String encryptedText= ad.encryptText("hello world",shared1);
+        String text = ad.decryptText(encryptedText,shared2);
+        System.out.println(text);
     }
 }
