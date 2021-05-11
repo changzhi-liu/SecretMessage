@@ -60,7 +60,14 @@ public class FriendsController {
         newFrendReq.setSenderId((Long)httpSession.getAttribute("uid"));
         newFrendReq.setReceiverDecided(false);
         newFrendReq.setSenderRetrieved(false);
+        if (friendPkBo.getSingleRequestBySenderReceiver(newFrendReq.getSenderId(), newFrendReq.getReceiverId()) != null){
+            return ("added, wait for receiver get response");
+        }
+
+
         int res = friendPkBo.insertOneRow(newFrendReq);
+
+
         // store private key
         LocalkeyPairsUtil.getInstance().putMyPrivateKey( (Long)(param.get("friendId")), keys[1]);
         return res == 0 ? "false" : "true";
