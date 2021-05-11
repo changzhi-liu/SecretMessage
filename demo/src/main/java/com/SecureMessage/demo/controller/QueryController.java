@@ -85,12 +85,7 @@ public class QueryController {
         String res = stringXor.xorList(allQueryResults);
         //log client get this
         logger.info("The real message calculated by client is {}!" , res);
-        for (int x = 0; x < res.length(); x++){
-            if (res.charAt(x) == 0){
-                res = res.substring(0,x);
-                break;
-            }
-        }
+
         //for demo purpose
         for (Integer row : queryList.get(0)){
             MessageDetailDao msg =  messageBo.getMsgByIndex(row);

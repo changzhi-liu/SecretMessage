@@ -11,7 +11,7 @@ def fake_inserts(users:dict, num_of_msgs=400, string_size=20):
         sender_id, sender = random.choice(list(temp.items()))
         temp.pop(sender_id)
         receiver_id, receiver = random.choice(list(temp.items()))
-        content = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits ) for _ in range(string_size))
+        content = ''.join(random.SystemRandom().choice("ABCDEF" + string.digits) for _ in range(string_size))
         validation = 0
         
         ts = time.time()

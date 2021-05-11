@@ -4,7 +4,6 @@ package com.SecureMessage.demo.bo;
 import com.SecureMessage.demo.mapper.MessageDetailDaoMapper;
 import com.SecureMessage.demo.model.MessageDetailDao;
 import com.SecureMessage.demo.model.MessageDetailDaoExample;
-import com.SecureMessage.demo.requestmodel.WriteRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -3,7 +3,6 @@ package com.SecureMessage.demo.controller;
 import com.SecureMessage.demo.bo.UserBo;
 import com.SecureMessage.demo.model.userDetailDao;
 import com.SecureMessage.demo.requestmodel.UserLogin;
-import com.SecureMessage.demo.requestmodel.WriteRequest;
 import com.SecureMessage.demo.utils.GenerateQueryListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,9 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class LoginController {

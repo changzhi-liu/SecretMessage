@@ -1,9 +1,6 @@
 package com.SecureMessage.demo.utils;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,4 +26,24 @@ public class SendToServerUtil {
                 url, HttpMethod.GET, httpEntity, String.class);
         return res.getBody();
     }
+
+    public String sendXorMessageToServer(String url, int row, String msg, HttpServletRequest request) {
+        HttpHeaders header = new HttpHeaders();
+        List<String> cookies = new ArrayList<>();
+        Cookie[] cc = request.getCookies();
+        for (int i = 0; i < cc.length; i++)
+        {
+            cookies.add(cc[i].getName() + "=" + cc[i].getValue());
+        }
+        header.put(HttpHeaders.COOKIE, cookies);
+        header.setContentType(MediaType.APPLICATION_JSON);
+        String requestBody = "{\"index\": "+String.valueOf(row) + ", \"message\" : \""+msg+"\"}";
+        HttpEntity httpEntity = new HttpEntity(requestBody, header);
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<String> res = restTemplate.exchange(
+                url,  HttpMethod.POST,httpEntity, String.class);
+        return "res";
+    }
+
 }
