@@ -3,12 +3,13 @@ package com.SecureMessage.demo.util;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+import static javax.xml.bind.DatatypeConverter.printHexBinary;
+import static javax.xml.bind.DatatypeConverter.parseHexBinary;
 @Component
 public class StringXorUtil {
     public String twoStringXor(String str1, String str2) {
-        byte b1[] = str1.getBytes();
-        byte b2[] = str2.getBytes();
+        byte b1[] = parseHexBinary(str1);
+        byte b2[] = parseHexBinary(str2);
         byte longbytes[], shortbytes[];
         if (b1.length >= b2.length) {
             longbytes = b1;
@@ -25,7 +26,7 @@ public class StringXorUtil {
         for (; i < longbytes.length; i++) {
             xorstr[i] = longbytes[i];
         }
-        return new String(xorstr);
+        return printHexBinary(xorstr);
     }
     public String xorList(List<String> t){
         if (t.size() <= 1){
