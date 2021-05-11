@@ -26,4 +26,37 @@ public class LocalRowToSenderReceiverUtil {
         }
         return res;
     }
+    public static int getIntevalIndex(Long sender, Long receiver) {
+        if (sender == 1 && receiver ==2){
+            return 0;
+        } else if (sender == 2 && receiver ==1){
+            return 1;
+        } else if (sender == 1 && receiver ==3){
+            return 2;
+        } else if (sender == 3 && receiver ==1){
+            return 3;
+        } else if(sender == 2 && receiver ==3){
+            return 4;
+        } else if(sender == 3 && receiver ==2){
+            return 5;
+        }
+        return -1;
+    }
+    public static int getIntevalStartingIndex(int interval) {
+        if (interval == 0){
+            return 0;
+        } else if (interval == 1){
+            return 50;
+        } else if (interval == 2){
+            return 100;
+        } else if (interval ==3){
+            return 150;
+        } else if(interval == 4){
+            return 200;
+        } else if(interval == 5){
+            return 250;
+        }
+        return -1;
+    }
+
 }

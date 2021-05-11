@@ -1,15 +1,15 @@
 package com.SecureMessage.demo.requestmodel;
 
 public class WriteRequest {
-    Long index;
+    Long receiver_id;
     String message;
 
-    public Long getIndex() {
-        return index;
+    public Long getReceiver_id() {
+        return receiver_id;
     }
 
-    public void setIndex(Long index) {
-        this.index = index;
+    public void setReceiver_id(Long receiver_id) {
+        this.receiver_id = receiver_id;
     }
 
     public String getMessage() {
@@ -20,8 +20,8 @@ public class WriteRequest {
         this.message = message;
     }
 
-    public WriteRequest(Long index, String message) {
-        this.index = index;
+    public WriteRequest(Long receiver_id, String message) {
+        this.receiver_id = receiver_id;
         this.message = message;
     }
 }

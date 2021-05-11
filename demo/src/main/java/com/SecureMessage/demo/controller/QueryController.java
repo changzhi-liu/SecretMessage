@@ -38,14 +38,20 @@ public class QueryController {
     private HttpServletRequest request;
 
     @RequestMapping("/query")
-    public String userLogin(@RequestParam("index") int index,
+    public String userQuery(@RequestParam("sender_id") int sender_id,
                             HttpSession httpSession
     ){
         Logger logger = LogManager.getLogger(this.getClass());
+        Long myid = (Long)httpSession.getAttribute("uid");
+
+        int intervalIndex = LocalRowToSenderReceiverUtil.getIntevalIndex(new Long(sender_id),myid);
+        int nextCounter = localCounterUtil.getByCounterByInterval(intervalIndex);
+
+        int intervalStart = LocalRowToSenderReceiverUtil.getIntevalStartingIndex(intervalIndex);
+        int actPosi = nextCounter % 50 + intervalStart;
 
 
-
-        List<List<Integer>> lists = gq.getList(index);
+        List<List<Integer>> lists = gq.getList(actPosi);
         //queryService
         List<List<Integer>> queryList = gq.convertToRow(lists); //{{3,7,9}. {4,1,7}}
         List<String> allQueryResults = new ArrayList<>();
@@ -95,7 +101,7 @@ public class QueryController {
         //decode string
         //todo using index to get key
         String decoded = "";
-        int[] senderRec = LocalRowToSenderReceiverUtil.getIndex(new Long(index));
+        int[] senderRec = LocalRowToSenderReceiverUtil.getIndex(new Long(actPosi));
         if (senderRec == null || senderRec[1] !=  (Long)httpSession.getAttribute("uid")){
             return "range is not correct";
         }
@@ -106,9 +112,23 @@ public class QueryController {
         } catch (Exception e) {
             return "encoding error, check if friendship is established";
         }
+        if (decoded.charAt(0) != ')'){
+            return "the message is corrupted, wait for a while to reachieve";
+        }
+        int x = 1;
+        while (x < decoded.length() && decoded.charAt(x) != '('){
+            x+=1;
+        }
+        if (decoded.length() == x){
+            return "the message is corrupted, wait for a while to reachieve";
+        }
+        Long counter = Long.parseLong(decoded.substring(1,x));
+        if (nextCounter > counter){
+            return "no new message";
+        }
+        localCounterUtil.increaseCounterByIndex(intervalIndex);
 
-
-        return decoded;
+        return decoded.substring(x+1);
 
     }
 

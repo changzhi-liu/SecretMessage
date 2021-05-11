@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class localCounterUtil {
-    Map<Long, Long> counterMap;
+    static int[] counters = new int[]{0,0,0,0,0,0};
+    public static void increaseCounterByIndex(int index){
 
-    public localCounterUtil() {
-        if (counterMap == null) {
-            this.counterMap = new HashMap<>();
-//            counterMap.put(0, )
-        }
+        counters[index] +=1;
+
+    }
+    public static int getByCounterByInterval(int interval){
+        return counters[interval];
     }
 }

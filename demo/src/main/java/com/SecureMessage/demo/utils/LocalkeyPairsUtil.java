@@ -65,7 +65,11 @@ public class LocalkeyPairsUtil implements Serializable {
         if (keyPairs.size() == 0) {
             keyPairs = readFromFile();
         }
-        return keyPairs.get(id)[1];
+
+        if (keyPairs.containsKey(id)) {
+            return keyPairs.get(id)[1];
+        }
+        return null;
     }
     public String getMyPrivateKey(Long id){
         if (keyPairs.size() == 0) {

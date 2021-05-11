@@ -25,10 +25,10 @@ public class MessageBo {
         return MessageDetailDaos.get(0);
     }
 
-    public boolean updateSingleMessageByKey(WriteRequest req){
+    public boolean updateSingleMessageByKey(String msg, Long index){
         MessageDetailDao input = new MessageDetailDao();
-        input.setContent(req.getMessage());
-        input.setMsgIndex(req.getIndex());
+        input.setContent(msg);
+        input.setMsgIndex(index);
         int res = mapper.updateByPrimaryKeySelective(input);
         return res == 0 ? false : true;
     }
